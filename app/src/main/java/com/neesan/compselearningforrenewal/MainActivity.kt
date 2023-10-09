@@ -7,9 +7,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.neesan.compselearningforrenewal.ui.theme.CompseLearningForRenewalTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +27,3 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-sealed class Screen(val route: String, @StringRes val resourceId: Int) {
-    object Profile : Screen("profile", R.string.profile)
-    object FriendsList : Screen("friendslist", R.string.friends_list)
-}
