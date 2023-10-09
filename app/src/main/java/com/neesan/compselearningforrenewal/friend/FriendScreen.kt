@@ -1,9 +1,12 @@
 package com.neesan.compselearningforrenewal.friend
 
-import androidx.compose.material3.Text
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.AnnotatedString
 
 @Composable
-fun FriendScreen() {
-    Text(text = "Friend Screen")
+fun FriendScreen(onContentSelected: (Long) -> Unit) {
+    ClickableText(text = AnnotatedString("Friend Screen")) {
+        onContentSelected(2)
+    }
 }
