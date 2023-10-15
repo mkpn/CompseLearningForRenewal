@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ProfileScreen(onContentSelected: (Long) -> Unit) {
+fun PeopleScreen(onContentSelected: (Long) -> Unit) {
     val members = listOf(
         "Alice Adams",
         "Aiden Anderson",

@@ -21,15 +21,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.neesan.compselearningforrenewal.friend.FriendScreen
-import com.neesan.compselearningforrenewal.profile.ProfileScreen
+import com.neesan.compselearningforrenewal.friend.StickerTabScreen
+import com.neesan.compselearningforrenewal.profile.PeopleScreen
 
 @Composable
 fun HomeScreen(onContentSelected: (Long) -> Unit) {
     val navController = rememberNavController()
     val items = listOf(
-        HomeNavigationObjects.Profile,
-        HomeNavigationObjects.FriendsList,
+        HomeNavigationObjects.People,
+        HomeNavigationObjects.StickyTab,
     )
     Scaffold(
         bottomBar = {
@@ -38,14 +38,14 @@ fun HomeScreen(onContentSelected: (Long) -> Unit) {
     ) { innerPadding ->
         NavHost(
             navController,
-            startDestination = HomeNavigationObjects.Profile.route,
+            startDestination = HomeNavigationObjects.People.route,
             Modifier.padding(innerPadding)
         ) {
-            composable(HomeNavigationObjects.Profile.route) {
-                ProfileScreen(onContentSelected)
+            composable(HomeNavigationObjects.People.route) {
+                PeopleScreen(onContentSelected)
             }
-            composable(HomeNavigationObjects.FriendsList.route) {
-                FriendScreen(onContentSelected)
+            composable(HomeNavigationObjects.StickyTab.route) {
+                StickerTabScreen(onContentSelected)
             }
         }
     }

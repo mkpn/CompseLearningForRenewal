@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">CompseLearningForRenewal</string>
-    <string name="profile">Profile</string>
-    <string name="friends_list">Friend List</string>
+    <string name="people">People</string>
+    <string name="sticky_tab">Sticky Tab</string>
 </resources>

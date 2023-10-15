@@ -19,6 +19,6 @@ import com.neesan.compselearningforrenewal.R
 //}
 
 sealed class HomeNavigationObjects(val route: String, @StringRes val resourceId: Int) {
-    object Profile : HomeNavigationObjects("profile", R.string.profile)
-    object FriendsList : HomeNavigationObjects("friendslist", R.string.friends_list)
+    object People : HomeNavigationObjects("people", R.string.people)
+    object StickyTab : HomeNavigationObjects("stickyTab", R.string.sticky_tab)
 }
