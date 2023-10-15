@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -63,6 +63,8 @@ fun MyBottomNavigation(
         val currentDestination = navBackStackEntry?.destination
         items.forEach { screen ->
             BottomNavigationItem(
+                // IconやTextはmaterial3を使うとうまく動かない。
+                // BottomNavigationItemがmaterial2なのに対してIconやTextはmaterial3なので、color周りの扱いが異なっているせいで起きてるっぽい・・・
                 icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
                 label = { Text(stringResource(screen.resourceId)) },
                 selectedContentColor = Color.Red,
