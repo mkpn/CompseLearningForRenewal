@@ -1,107 +1,197 @@
 package com.neesan.compselearningforrenewal.friend
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
+/**
+ * 参考元
+ * https://stackoverflow.com/questions/72240936/horizontalpager-with-lazycolumn-inside-another-lazycolumn-jetpack-compose
+ */
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun StickerTabScreen(onContentSelected: (Long) -> Unit) {
-    var tabSelected by rememberSaveable { mutableStateOf(Screen.FRUITS) }
-    LazyColumn {
-        item {
-            Text(
+    // Tabs for pager
+    val tabData = listOf(
+        "Tab 1",
+        "Tab 2",
+    )
+
+    // Pager state
+    val pagerState = rememberPagerState(pageCount = {
+        tabData.size
+    })
+
+    // Coroutine scope for scroll pager
+    val coroutineScope = rememberCoroutineScope()
+
+    // Scroll behavior for TopAppBar
+    val scrollBehavior =
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                scrollBehavior = scrollBehavior,
+                title = {
+                    Text(text = "Top app bar")
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    scrolledContainerColor = MaterialTheme.colorScheme.surface
+                ),
+            )
+        },
+        content = { innerPadding ->
+            Column(
                 modifier = Modifier
-                    .padding(vertical = 100.dp)
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                text = "collapsed!"
+                    .padding(innerPadding)
+                    .fillMaxSize(),
+                content = {
+                    TabRow(
+                        selectedTabIndex = pagerState.currentPage,
+                        tabs = {
+                            tabData.forEachIndexed { index, title ->
+                                Tab(
+                                    text = { Text(title) },
+                                    selected = pagerState.currentPage == index,
+                                    onClick = {
+                                        coroutineScope.launch {
+                                            pagerState.animateScrollToPage(index)
+                                        }
+                                    },
+                                )
+                            }
+                        }
+                    )
+
+                    HorizontalPager(state = pagerState) { tabId ->
+                        when (tabId) {
+                            0 -> Tab1(scrollBehavior = scrollBehavior)
+                            1 -> Tab2(scrollBehavior = scrollBehavior)
+                        }
+                    }
+                }
             )
         }
-        stickyHeader {
-            TabRow(
-                selectedTabIndex = tabSelected.ordinal
-            ) {
-                Screen.values().map { it.name }.forEachIndexed { index, title ->
-                    Tab(
-                        text = { Text(text = title) },
-                        selected = tabSelected.ordinal == index,
-                        onClick = { tabSelected = Screen.values()[index] }
-                    )
-                }
-            }
-        }
-        when (tabSelected) {
-            Screen.FRUITS -> fruitsScreen(this@LazyColumn, onContentSelected)
-            Screen.ANIMAL -> animalScreen(this@LazyColumn, onContentSelected)
-        }
-    }
-}
-
-enum class Screen {
-    FRUITS, ANIMAL
-}
-
-fun fruitsScreen(
-    lazyListScope: LazyListScope,
-    onContentSelected: (Long) -> Unit
-) {
-    val fruits = listOf(
-        "Apple", "Banana", "Cherry", "Date", "Grape",
-        "Lemon", "Mango", "Orange", "Pineapple", "Strawberry",
-        "Watermelon", "Blueberry", "Kiwi", "Peach", "Pear"
     )
-    with(lazyListScope) {
-        items(fruits + fruits + fruits) {
-            ClickableText(
-                text = AnnotatedString(it),
-                style = TextStyle(
-                    fontSize = 24.sp
-                )
-            ) {
-                onContentSelected(1)
-            }
-        }
-    }
 }
 
-fun animalScreen(
-    lazyListScope: LazyListScope,
-    onContentSelected: (Long) -> Unit
-) {
-    val animals = listOf(
-        "Dog", "Cat", "Elephant", "Giraffe", "Lion",
-        "Tiger", "Kangaroo", "Panda", "Hippopotamus", "Zebra",
-        "Monkey", "Rabbit", "Dolphin", "Penguin", "Turtle"
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Tab1(scrollBehavior: TopAppBarScrollBehavior) {
+    // List items
+    val listItems = listOf(
+        "test 1 tab 1",
+        "test 2 tab 1",
+        "test 3 tab 1",
+        "test 4 tab 1",
+        "test 5 tab 1",
+        "test 6 tab 1",
+        "test 7 tab 1",
+        "test 8 tab 1",
+        "test 9 tab 1",
+        "test 10 tab 1",
+        "test 11 tab 1",
+        "test 12 tab 1",
     )
-    with(lazyListScope) {
-        items(animals + animals + animals) {
-            ClickableText(
-                text = AnnotatedString(it),
-                style = TextStyle(
-                    fontSize = 24.sp
+
+    val listState = rememberLazyListState()
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        state = listState,
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        content = {
+            items(items = listItems) { item ->
+                Card(
+                    modifier = Modifier
+                        .height(80.dp)
+                        .fillMaxWidth(),
+
+                    content = { Text(text = item) }
                 )
-            ) {
-                onContentSelected(1)
             }
         }
-    }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Tab2(scrollBehavior: TopAppBarScrollBehavior) {
+    // List items
+    val listItems = listOf(
+        "test 1 tab 2",
+        "test 2 tab 2",
+        "test 3 tab 2",
+        "test 4 tab 2",
+        "test 5 tab 2",
+        "test 6 tab 2",
+        "test 7 tab 2",
+        "test 8 tab 2",
+        "test 9 tab 2",
+        "test 10 tab 2",
+        "test 11 tab 2",
+        "test 12 tab 2",
+    )
+
+    val listState = rememberLazyListState()
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        state = listState,
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        content = {
+            items(items = listItems) { item ->
+                Card(
+                    modifier = Modifier
+                        .height(80.dp)
+                        .fillMaxWidth(),
+
+                    content = { Text(text = item) }
+                )
+            }
+        }
+    )
 }
