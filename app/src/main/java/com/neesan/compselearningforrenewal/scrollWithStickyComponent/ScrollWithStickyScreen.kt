@@ -75,6 +75,8 @@ fun ScrollWithStickyScreen() {
         }
     }
 
+    // ヘッダーのoffsetと連動して動かすためのmodifier
+    // 子ビュー全部に適用する
     val modifierWithOffsetY = Modifier.offset {
         IntOffset(
             x = 0,
@@ -127,11 +129,7 @@ fun ScrollWithStickyScreen() {
                     Tab(
                         text = { Text(title) },
                         selected = false,
-                        onClick = {
-//                            coroutineScope.launch {
-//                                pagerState.animateScrollToPage(index)
-//                            }
-                        },
+                        onClick = {},
                     )
                 }
             }
