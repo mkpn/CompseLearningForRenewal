@@ -32,12 +32,11 @@ import kotlin.math.roundToInt
 fun ScrollWithStickyScreen() {
     val lazyListState = rememberLazyListState()
 
+    // ヘッダーの高さ。あとでヘッダーの高さ計算が終わったら更新される
     var headerHeightPx = 0f
     // ヘッダー部分のoffsetポジションの高さ
     // 値が負なら基準位置より上に配置される
     val headerOffsetPx = remember { mutableFloatStateOf(0f) }
-
-    val current = LocalDensity.current
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
@@ -53,11 +52,12 @@ fun ScrollWithStickyScreen() {
                 // ヘッダーのoffsetがヘッダーの高さ分だけマイナスにされていて画面から完全に消えている時
                 if (headerOffsetPx.floatValue <= -headerHeightPx) {
 
-                    //　LazyColumnも一番上までスクロールされていて、さらに下にスクロールされた時
+                    //　LazyColumnも最上部までスクロールされていて、さらに下方向にスクロールされた時
                     return if (lazyListState.firstVisibleItemIndex == 0
                         && lazyListState.firstVisibleItemScrollOffset == 0
                         && delta > 0f
                     ) {
+                        // スクロールされた分ヘッダーを下に移動させて画面内に入れる
                         headerOffsetPx.floatValue = newOffset.coerceIn(-headerHeightPx, 0f)
                         // LazyColumnのスクロールを奪う
                         Offset(0f, delta)
@@ -66,7 +66,7 @@ fun ScrollWithStickyScreen() {
                         Offset.Zero
                     }
                 } else { // ヘッダーが少しでも見えてる時
-                    // ヘッダーのoffset位置を更新する
+                    // スクロールされた分ヘッダーのoffset位置を更新する
                     headerOffsetPx.floatValue = newOffset.coerceIn(-headerHeightPx, 0f)
                     // LazyColumnのスクロールを奪う
                     return Offset(0f, delta)
@@ -98,12 +98,7 @@ fun ScrollWithStickyScreen() {
             .background(Color.Gray)
             .fillMaxWidth()
             .onGloballyPositioned {
-                with(current) {
-                    headerHeightPx = it.size.height
-                        .toDp()
-                        .roundToPx()
-                        .toFloat()
-                }
+                headerHeightPx = it.size.height.toFloat()
             }) {
             Text(
                 text = "Header"
