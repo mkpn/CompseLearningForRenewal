@@ -1,30 +1,23 @@
 package com.neesan.compselearningforrenewal.scrollWithStickyComponent
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -32,18 +25,19 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import kotlin.math.roundToInt
 
 @Composable
-fun ScrollWithStickyScreen(onContentSelected: (Long) -> Unit) {
+fun ScrollWithStickyScreen() {
     val lazyListState = rememberLazyListState()
-    // here we use LazyColumn that has build-in nested scroll, but we want to act like a
-    // parent for this LazyColumn and participate in its nested scroll.
-    // Let's make a collapsing toolbar for LazyColumn
+
     var headerHeightPx = 0f
     // ヘッダー部分のoffsetポジションの高さ
     // 値が負なら基準位置より上に配置される
     val headerOffsetPx = remember { mutableFloatStateOf(0f) }
+
+    val current = LocalDensity.current
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
@@ -56,23 +50,22 @@ fun ScrollWithStickyScreen(onContentSelected: (Long) -> Unit) {
                 // 下にスクロールされた場合は、その分だけヘッダーのoffset値がプラスされる
                 val newOffset = headerOffsetPx.floatValue + delta
 
+                // ヘッダーのoffsetがヘッダーの高さ分だけマイナスにされていて画面から完全に消えている時
                 if (headerOffsetPx.floatValue <= -headerHeightPx) {
-                    // ヘッダーのoffsetがヘッダーの高さ分だけマイナスにされていて画面から完全に消えている時
 
+                    //　LazyColumnも一番上までスクロールされていて、さらに下にスクロールされた時
                     return if (lazyListState.firstVisibleItemIndex == 0
                         && lazyListState.firstVisibleItemScrollOffset == 0
                         && delta > 0f
                     ) {
-                        //　LazyColumnも一番上までスクロールされていて、さらに下にスクロールされた時
                         headerOffsetPx.floatValue = newOffset.coerceIn(-headerHeightPx, 0f)
                         // LazyColumnのスクロールを奪う
                         Offset(0f, delta)
                     } else {
-                        // LazyColumnをスクロールする
+                        // 子のLazyColumnをスクロールする
                         Offset.Zero
                     }
-                } else {
-                    // ヘッダーが少しでも見えてる時
+                } else { // ヘッダーが少しでも見えてる時
                     // ヘッダーのoffset位置を更新する
                     headerOffsetPx.floatValue = newOffset.coerceIn(-headerHeightPx, 0f)
                     // LazyColumnのスクロールを奪う
@@ -88,31 +81,53 @@ fun ScrollWithStickyScreen(onContentSelected: (Long) -> Unit) {
             y = headerOffsetPx.floatValue.roundToInt()
         )
     }
-    val current = LocalDensity.current
-    Column(
+
+    ConstraintLayout(
         Modifier
             .fillMaxWidth()
             // attach as a parent to the nested scroll system
             .nestedScroll(nestedScrollConnection)
     ) {
+        val (header, tab, lazyColumn) = createRefs()
         Column(modifier = modifierWithOffsetY
+            .constrainAs(header) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+            }
+            .background(Color.Gray)
+            .fillMaxWidth()
             .onGloballyPositioned {
                 with(current) {
-                    headerHeightPx = it.size.height.toDp().roundToPx().toFloat()
+                    headerHeightPx = it.size.height
+                        .toDp()
+                        .roundToPx()
+                        .toFloat()
                 }
             }) {
             Text(
-                text = "toolbar offset is ${headerOffsetPx.floatValue}"
+                text = "Header"
             )
             Text(
-                text = "toolbar offset is ${headerOffsetPx.floatValue}"
+                text = "Header"
+            )
+            Text(
+                text = "Header"
+            )
+            Text(
+                text = "Header"
+            )
+            Text(
+                text = "Header"
             )
         }
-        TabRow(
-            modifier = modifierWithOffsetY,
+        ScrollableTabRow(
+            modifier = modifierWithOffsetY.constrainAs(tab) {
+                top.linkTo(header.bottom)
+                start.linkTo(parent.start)
+            },
             selectedTabIndex = 0,
             tabs = {
-                listOf("0", "1").forEachIndexed { index, title ->
+                listOf("0", "1", "3", "4", "5").forEachIndexed { index, title ->
                     Tab(
                         text = { Text(title) },
                         selected = false,
@@ -128,12 +143,13 @@ fun ScrollWithStickyScreen(onContentSelected: (Long) -> Unit) {
         // our list with build in nested scroll support that will notify us about its scroll
         LazyColumn(
             modifier = modifierWithOffsetY
-                .fillMaxSize()
-                .onGloballyPositioned {
-                    println("デバッグ onGloballyPositioned: ${it.size.height}")
-                    it.size.height
-                },
-            state = lazyListState
+                .constrainAs(lazyColumn) {
+                    top.linkTo(tab.bottom)
+                    start.linkTo(parent.start)
+                }
+                .fillMaxSize(),
+            state = lazyListState,
+            contentPadding = PaddingValues(bottom = 48.dp), // なぜか一番下のアイテムが見えないのでこれで誤魔化す。タブのサイズ分スクロール領域がおかしい・・・？
         ) {
             items(100) { index ->
                 Text(
@@ -144,85 +160,4 @@ fun ScrollWithStickyScreen(onContentSelected: (Long) -> Unit) {
             }
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Tab1() {
-    // List items
-    val listItems = listOf(
-        "test 1 tab 1",
-        "test 2 tab 1",
-        "test 3 tab 1",
-        "test 4 tab 1",
-        "test 5 tab 1",
-        "test 6 tab 1",
-        "test 7 tab 1",
-        "test 8 tab 1",
-        "test 9 tab 1",
-        "test 10 tab 1",
-        "test 11 tab 1",
-        "test 12 tab 1",
-    )
-
-    val listState = rememberLazyListState()
-
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = listState,
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        content = {
-            items(items = listItems) { item ->
-                Card(
-                    modifier = Modifier
-                        .height(80.dp)
-                        .fillMaxWidth(),
-
-                    content = { Text(text = item) }
-                )
-            }
-        }
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Tab2() {
-    // List items
-    val listItems = listOf(
-        "test 1 tab 2",
-        "test 2 tab 2",
-        "test 3 tab 2",
-        "test 4 tab 2",
-        "test 5 tab 2",
-        "test 6 tab 2",
-        "test 7 tab 2",
-        "test 8 tab 2",
-        "test 9 tab 2",
-        "test 10 tab 2",
-        "test 11 tab 2",
-        "test 12 tab 2",
-    )
-
-    val listState = rememberLazyListState()
-
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth(),
-        state = listState,
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        content = {
-            items(items = listItems) { item ->
-                Card(
-                    modifier = Modifier
-                        .height(80.dp)
-                        .fillMaxWidth(),
-
-                    content = { Text(text = item) }
-                )
-            }
-        }
-    )
 }

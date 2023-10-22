@@ -50,7 +50,7 @@ fun HomeScreen(onContentSelected: (Long) -> Unit) {
                 StickerTabScreen(onContentSelected)
             }
             composable(HomeNavigationObjects.ScrollWithSticky.route) {
-                ScrollWithStickyScreen(onContentSelected)
+                ScrollWithStickyScreen()
             }
         }
     }
