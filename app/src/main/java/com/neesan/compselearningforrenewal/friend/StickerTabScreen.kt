@@ -66,40 +66,38 @@ fun StickerTabScreen(onContentSelected: (Long) -> Unit) {
                     scrolledContainerColor = MaterialTheme.colorScheme.surface
                 ),
             )
-        },
-        content = { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize(),
-                content = {
-                    TabRow(
-                        selectedTabIndex = pagerState.currentPage,
-                        tabs = {
-                            tabData.forEachIndexed { index, title ->
-                                Tab(
-                                    text = { Text(title) },
-                                    selected = pagerState.currentPage == index,
-                                    onClick = {
-                                        coroutineScope.launch {
-                                            pagerState.animateScrollToPage(index)
-                                        }
-                                    },
-                                )
-                            }
-                        }
-                    )
-
-                    HorizontalPager(state = pagerState) { tabId ->
-                        when (tabId) {
-                            0 -> Tab1(scrollBehavior = scrollBehavior)
-                            1 -> Tab2(scrollBehavior = scrollBehavior)
-                        }
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
+            TabRow(
+                selectedTabIndex = pagerState.currentPage,
+                tabs = {
+                    tabData.forEachIndexed { index, title ->
+                        Tab(
+                            text = { Text(title) },
+                            selected = pagerState.currentPage == index,
+                            onClick = {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(index)
+                                }
+                            },
+                        )
                     }
                 }
             )
+
+            HorizontalPager(state = pagerState) { tabId ->
+                when (tabId) {
+                    0 -> Tab1(scrollBehavior = scrollBehavior)
+                    1 -> Tab2(scrollBehavior = scrollBehavior)
+                }
+            }
         }
-    )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
