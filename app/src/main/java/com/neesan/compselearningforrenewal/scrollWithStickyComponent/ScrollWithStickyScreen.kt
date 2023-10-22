@@ -82,6 +82,7 @@ fun ScrollWithStickyScreen() {
         )
     }
 
+    // ColumnではなくConstraintで縦に並べないと一番下のLazyColumnの高さが画面外まで確保されないみたいな状態になった・・・
     ConstraintLayout(
         Modifier
             .fillMaxWidth()
