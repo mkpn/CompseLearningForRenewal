@@ -23,6 +23,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.neesan.compselearningforrenewal.friend.StickerTabScreen
 import com.neesan.compselearningforrenewal.profile.PeopleScreen
+import com.neesan.compselearningforrenewal.scrollWithStickyComponent.ScrollWithStickyComponent
 
 @Composable
 fun HomeScreen(onContentSelected: (Long) -> Unit) {
@@ -30,6 +31,7 @@ fun HomeScreen(onContentSelected: (Long) -> Unit) {
     val items = listOf(
         HomeNavigationObjects.People,
         HomeNavigationObjects.StickyTab,
+        HomeNavigationObjects.ScrollWithSticky
     )
     Scaffold(
         bottomBar = {
@@ -46,6 +48,9 @@ fun HomeScreen(onContentSelected: (Long) -> Unit) {
             }
             composable(HomeNavigationObjects.StickyTab.route) {
                 StickerTabScreen(onContentSelected)
+            }
+            composable(HomeNavigationObjects.ScrollWithSticky.route) {
+                ScrollWithStickyComponent(onContentSelected)
             }
         }
     }

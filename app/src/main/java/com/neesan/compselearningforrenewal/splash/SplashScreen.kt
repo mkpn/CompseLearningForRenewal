@@ -19,7 +19,7 @@ fun SplashScreen(onInitFinish: () -> Unit) {
 @Composable
 private fun SplashContent(onInitFinish: () -> Unit) {
     LaunchedEffect(Unit) {
-        delay(1500)
+        delay(200)
         onInitFinish()
     }
 

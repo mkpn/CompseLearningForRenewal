@@ -21,4 +21,5 @@ import com.neesan.compselearningforrenewal.R
 sealed class HomeNavigationObjects(val route: String, @StringRes val resourceId: Int) {
     object People : HomeNavigationObjects("people", R.string.people)
     object StickyTab : HomeNavigationObjects("stickyTab", R.string.sticky_tab)
+    object ScrollWithSticky : HomeNavigationObjects("scrollWithSticky", R.string.sticky_tab)
 }
