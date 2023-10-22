@@ -23,7 +23,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.neesan.compselearningforrenewal.friend.StickerTabScreen
 import com.neesan.compselearningforrenewal.profile.PeopleScreen
-import com.neesan.compselearningforrenewal.scrollWithStickyComponent.ScrollWithStickyComponent
+import com.neesan.compselearningforrenewal.scrollWithStickyComponent.ScrollWithStickyScreen
 
 @Composable
 fun HomeScreen(onContentSelected: (Long) -> Unit) {
@@ -50,7 +50,7 @@ fun HomeScreen(onContentSelected: (Long) -> Unit) {
                 StickerTabScreen(onContentSelected)
             }
             composable(HomeNavigationObjects.ScrollWithSticky.route) {
-                ScrollWithStickyComponent(onContentSelected)
+                ScrollWithStickyScreen(onContentSelected)
             }
         }
     }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -17,33 +18,33 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import kotlin.math.roundToInt
 
 @Composable
-fun ScrollWithStickyComponent(onContentSelected: (Long) -> Unit) {
+fun ScrollWithStickyScreen(onContentSelected: (Long) -> Unit) {
     val lazyListState = rememberLazyListState()
     // here we use LazyColumn that has build-in nested scroll, but we want to act like a
     // parent for this LazyColumn and participate in its nested scroll.
     // Let's make a collapsing toolbar for LazyColumn
-    // Todo: どうにかしてここを可変にしなきゃ行けない　ヘッダーがレイアウトされたタイミングで高さを取得してセットしたい
-    val headerHeight = 300.dp
-    val headerHeightPx = with(LocalDensity.current) { headerHeight.roundToPx().toFloat() }
+    var headerHeightPx = 0f
     // ヘッダー部分のoffsetポジションの高さ
     // 値が負なら基準位置より上に配置される
     val headerOffsetPx = remember { mutableFloatStateOf(0f) }
-    // now, let's create connection to the nested scroll system and listen to the scroll
-    // happening inside child LazyColumn
+
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
@@ -55,10 +56,6 @@ fun ScrollWithStickyComponent(onContentSelected: (Long) -> Unit) {
                 // 下にスクロールされた場合は、その分だけヘッダーのoffset値がプラスされる
                 val newOffset = headerOffsetPx.floatValue + delta
 
-                // here's the catch: let's pretend we consumed 0 in any case, since we want
-                // LazyColumn to scroll anyway for good UX
-                // We're basically watching scroll without taking it
-                println("デバッグ toolbarOffsetHeightPx.floatValue: ${headerOffsetPx.floatValue}")
                 if (headerOffsetPx.floatValue <= -headerHeightPx) {
                     // ヘッダーのoffsetがヘッダーの高さ分だけマイナスにされていて画面から完全に消えている時
 
@@ -82,28 +79,35 @@ fun ScrollWithStickyComponent(onContentSelected: (Long) -> Unit) {
                     return Offset(0f, delta)
                 }
             }
-
-            override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
-                return super.onPostFling(consumed, available)
-            }
         }
     }
+
     val modifierWithOffsetY = Modifier.offset {
         IntOffset(
             x = 0,
             y = headerOffsetPx.floatValue.roundToInt()
         )
     }
+    val current = LocalDensity.current
     Column(
         Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             // attach as a parent to the nested scroll system
             .nestedScroll(nestedScrollConnection)
     ) {
-        Text(
-            modifier = modifierWithOffsetY.height(headerHeight),
-            text = "toolbar offset is ${headerOffsetPx.floatValue}"
-        )
+        Column(modifier = modifierWithOffsetY
+            .onGloballyPositioned {
+                with(current) {
+                    headerHeightPx = it.size.height.toDp().roundToPx().toFloat()
+                }
+            }) {
+            Text(
+                text = "toolbar offset is ${headerOffsetPx.floatValue}"
+            )
+            Text(
+                text = "toolbar offset is ${headerOffsetPx.floatValue}"
+            )
+        }
         TabRow(
             modifier = modifierWithOffsetY,
             selectedTabIndex = 0,
@@ -124,7 +128,11 @@ fun ScrollWithStickyComponent(onContentSelected: (Long) -> Unit) {
         // our list with build in nested scroll support that will notify us about its scroll
         LazyColumn(
             modifier = modifierWithOffsetY
-                .fillMaxSize(),
+                .fillMaxSize()
+                .onGloballyPositioned {
+                    println("デバッグ onGloballyPositioned: ${it.size.height}")
+                    it.size.height
+                },
             state = lazyListState
         ) {
             items(100) { index ->
@@ -160,8 +168,7 @@ fun Tab1() {
     val listState = rememberLazyListState()
 
     LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
         state = listState,
         contentPadding = PaddingValues(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
