@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.com.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
 
 android {
@@ -39,6 +40,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -63,6 +65,9 @@ dependencies {
     implementation(libs.androidx.material)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.constraintlayout.compose)
+
+    implementation (libs.maps.compose)
+    implementation (libs.play.services.maps)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
