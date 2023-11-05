@@ -13,33 +13,46 @@ import androidx.compose.ui.unit.dp
 
 data class CheckboxItem(val isChecked: Boolean, val label: String)
 
+// 呼び出し側の関数の実装
 @Composable
-fun CheckBoxGroupScreen(contentId: Long) {
-    Column {
-        val checkboxItemList = remember {
-            mutableStateListOf(
-                CheckboxItem(false, "Item 1"),
-                CheckboxItem(false, "Item 2"),
-                CheckboxItem(false, "Item 3"),
-                CheckboxItem(false, "Item 4"),
-                CheckboxItem(false, "Item 5")
-            )
-        }
+fun CheckboxGroupScreen() {
+    val checkboxItems = remember {
+        listOf(
+            CheckboxItem(false, "Item 1"),
+            CheckboxItem(false, "Item 2"),
+            CheckboxItem(false, "Item 3"),
+            CheckboxItem(false, "Item 4"),
+            CheckboxItem(false, "Item 5")
+        )
+    }
 
-        val parentState = checkboxItemList.all { it.isChecked }
+    CheckBoxGroupContent(
+        checkboxItemList = checkboxItems
+    )
+}
+
+@Composable
+fun CheckBoxGroupContent(
+    checkboxItemList: List<CheckboxItem>
+) {
+    val modifiedCheckboxItemList = remember { mutableStateListOf(*checkboxItemList.toTypedArray()) }
+
+    val parentState = modifiedCheckboxItemList.all { it.isChecked }
+    Column {
         Checkbox(
             checked = parentState,
             onCheckedChange = { isChecked ->
-                checkboxItemList.replaceAll { it.copy(isChecked = isChecked) }
+                modifiedCheckboxItemList.replaceAll { it.copy(isChecked = isChecked) }
             }
         )
+
         Spacer(Modifier.size(25.dp))
         Column(Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp)) {
-            checkboxItemList.forEachIndexed { index, checkboxItem ->
+            modifiedCheckboxItemList.forEachIndexed { index, checkboxItem ->
                 Checkbox(
                     checked = checkboxItem.isChecked,
                     onCheckedChange = { isChecked ->
-                        checkboxItemList[index] = checkboxItem.copy(isChecked = isChecked)
+                        modifiedCheckboxItemList[index] = checkboxItem.copy(isChecked = isChecked)
                     }
                 )
                 Spacer(Modifier.size(25.dp))

@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.neesan.compselearningforrenewal.checkboxGroup.CheckBoxGroupScreen
+import com.neesan.compselearningforrenewal.checkboxGroup.CheckboxGroupScreen
 import com.neesan.compselearningforrenewal.home.HomeScreen
 import com.neesan.compselearningforrenewal.splash.SplashScreen
 
@@ -37,7 +37,7 @@ fun MyApp() {
         ) { backStackEntry ->
             val arguments = requireNotNull(backStackEntry.arguments)
             val snackId = arguments.getLong(AppDestinations.CONTENT_ID_KEY)
-            CheckBoxGroupScreen(snackId)
+            CheckboxGroupScreen()
         }
     }
 }
