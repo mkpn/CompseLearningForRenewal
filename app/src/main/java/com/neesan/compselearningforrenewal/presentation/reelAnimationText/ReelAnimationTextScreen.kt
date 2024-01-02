@@ -1,4 +1,4 @@
-package com.neesan.compselearningforrenewal.reelAnimationText
+package com.neesan.compselearningforrenewal.presentation.reelAnimationText
 
 import androidx.compose.runtime.*
 import androidx.compose.foundation.layout.*

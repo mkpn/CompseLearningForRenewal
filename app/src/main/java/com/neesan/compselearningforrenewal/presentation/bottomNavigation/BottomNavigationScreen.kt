@@ -1,5 +1,6 @@
-package com.neesan.compselearningforrenewal.home
+package com.neesan.compselearningforrenewal.presentation.bottomNavigation
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -21,17 +22,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.neesan.compselearningforrenewal.friend.StickerTabScreen
-import com.neesan.compselearningforrenewal.profile.PeopleScreen
-import com.neesan.compselearningforrenewal.scrollWithStickyComponent.ScrollWithStickyScreen
+import com.neesan.compselearningforrenewal.R
+import com.neesan.compselearningforrenewal.presentation.stickyTab.StickyTabScreen
+import com.neesan.compselearningforrenewal.presentation.people.PeopleScreen
+import com.neesan.compselearningforrenewal.presentation.scrollWithStickyComponent.ScrollWithStickyScreen
 
 @Composable
-fun HomeScreen(onContentSelected: (Long) -> Unit) {
+fun BottomNavigationScreen(onContentSelected: (Long) -> Unit) {
     val navController = rememberNavController()
     val items = listOf(
-        HomeNavigationObjects.People,
-        HomeNavigationObjects.StickyTab,
-        HomeNavigationObjects.ScrollWithSticky
+        BottomNavDestination.People,
+        BottomNavDestination.StickyTab,
+        BottomNavDestination.ScrollWithSticky
     )
     Scaffold(
         bottomBar = {
@@ -40,16 +42,16 @@ fun HomeScreen(onContentSelected: (Long) -> Unit) {
     ) { innerPadding ->
         NavHost(
             navController,
-            startDestination = HomeNavigationObjects.People.route,
+            startDestination = BottomNavDestination.People.route,
             Modifier.padding(innerPadding)
         ) {
-            composable(HomeNavigationObjects.People.route) {
+            composable(BottomNavDestination.People.route) {
                 PeopleScreen(onContentSelected)
             }
-            composable(HomeNavigationObjects.StickyTab.route) {
-                StickerTabScreen(onContentSelected)
+            composable(BottomNavDestination.StickyTab.route) {
+                StickyTabScreen(onContentSelected)
             }
-            composable(HomeNavigationObjects.ScrollWithSticky.route) {
+            composable(BottomNavDestination.ScrollWithSticky.route) {
                 ScrollWithStickyScreen()
             }
         }
@@ -59,7 +61,7 @@ fun HomeScreen(onContentSelected: (Long) -> Unit) {
 @Composable
 fun MyBottomNavigation(
     navController: NavHostController,
-    items: List<HomeNavigationObjects>
+    items: List<BottomNavDestination>
 ) {
     BottomNavigation(
         backgroundColor = Color.White
@@ -95,8 +97,14 @@ fun MyBottomNavigation(
     }
 }
 
+sealed class BottomNavDestination(val route: String, @StringRes val resourceId: Int) {
+    object People : BottomNavDestination("people", R.string.people)
+    object StickyTab : BottomNavDestination("stickyTab", R.string.sticky_tab)
+    object ScrollWithSticky : BottomNavDestination("scrollWithSticky", R.string.sticky_tab)
+}
+
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen {}
+    BottomNavigationScreen {}
 }

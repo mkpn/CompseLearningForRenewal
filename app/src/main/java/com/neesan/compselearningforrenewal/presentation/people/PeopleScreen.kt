@@ -1,4 +1,4 @@
-package com.neesan.compselearningforrenewal.profile
+package com.neesan.compselearningforrenewal.presentation.people
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background

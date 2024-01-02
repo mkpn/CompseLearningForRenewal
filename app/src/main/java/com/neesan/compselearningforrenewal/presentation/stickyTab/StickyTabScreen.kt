@@ -1,4 +1,4 @@
-package com.neesan.compselearningforrenewal.friend
+package com.neesan.compselearningforrenewal.presentation.stickyTab
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
@@ -37,7 +38,7 @@ import kotlinx.coroutines.launch
  */
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun StickerTabScreen(onContentSelected: (Long) -> Unit) {
+fun StickyTabScreen(onContentSelected: (Long) -> Unit) {
     // Tabs for pager
     val tabData = listOf(
         "Tab 1",
@@ -182,4 +183,10 @@ fun Tab2(scrollBehavior: TopAppBarScrollBehavior) {
             }
         }
     )
+}
+
+@Preview
+@Composable
+private fun PreviewStickerTabScreen() {
+    StickyTabScreen(onContentSelected = {})
 }

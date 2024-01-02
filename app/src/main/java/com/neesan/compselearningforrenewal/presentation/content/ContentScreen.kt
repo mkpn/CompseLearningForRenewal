@@ -1,4 +1,4 @@
-package com.neesan.compselearningforrenewal.content
+package com.neesan.compselearningforrenewal.presentation.content
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

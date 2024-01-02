@@ -1,4 +1,4 @@
-package com.neesan.compselearningforrenewal.checkboxGroup
+package com.neesan.compselearningforrenewal.presentation.checkboxGroup
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

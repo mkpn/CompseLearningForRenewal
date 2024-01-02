@@ -1,4 +1,4 @@
-package com.neesan.compselearningforrenewal.scrollWithStickyComponent
+package com.neesan.compselearningforrenewal.presentation.scrollWithStickyComponent
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

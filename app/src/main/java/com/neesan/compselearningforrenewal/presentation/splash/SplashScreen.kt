@@ -1,4 +1,4 @@
-package com.neesan.compselearningforrenewal.splash
+package com.neesan.compselearningforrenewal.presentation.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
