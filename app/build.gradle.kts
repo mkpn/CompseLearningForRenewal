@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.com.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -65,6 +67,19 @@ dependencies {
     implementation(libs.androidx.material)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.constraintlayout.compose)
+
+    // dagger hilt
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+    // okhttp
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+
+    // retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.kotlin.serialization)
 
     implementation (libs.maps.compose)
     implementation (libs.play.services.maps)
