@@ -13,6 +13,7 @@ import com.neesan.compselearningforrenewal.presentation.bottomNavigation.BottomN
 import com.neesan.compselearningforrenewal.presentation.content.ContentScreen
 import com.neesan.compselearningforrenewal.presentation.home.HomeScreen
 import com.neesan.compselearningforrenewal.presentation.people.PeopleScreen
+import com.neesan.compselearningforrenewal.presentation.pokemon.PokemonDetailScreen
 import com.neesan.compselearningforrenewal.presentation.reelAnimationText.ReelAnimationTextScreen
 import com.neesan.compselearningforrenewal.presentation.scrollWithStickyComponent.ScrollWithStickyScreen
 import com.neesan.compselearningforrenewal.presentation.splash.SplashScreen
@@ -78,6 +79,9 @@ fun MyApp() {
         composable(AwaitTasks.route) {
             AwaitTasksScreen()
         }
+        composable(PokemonDetail.route) {
+            PokemonDetailScreen()
+        }
     }
 }
 
@@ -126,6 +130,9 @@ sealed class AppDestination(
     data object StickyTab :
         AppDestination(AppDestinations.STICKY_TAB_ROUTE, "StickyTab", "StickyTab画面")
 
+    data object PokemonDetail :
+        AppDestination(AppDestinations.POKEMON_DETAIL_ROUTE, "pokemon detail", "PokeAPIからデータ取得")
+
     companion object {
         object AppDestinations {
             const val SPLASH_ROUTE = "splash"
@@ -139,6 +146,7 @@ sealed class AppDestination(
             const val STICKY_TAB_ROUTE = "sticky_tab"
             const val CONTENT_DETAIL_ROUTE = "content"
             const val CONTENT_ID_KEY = "contentId"
+            const val POKEMON_DETAIL_ROUTE = "pokemon_detail"
         }
     }
 

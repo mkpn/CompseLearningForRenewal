@@ -8,16 +8,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.neesan.compselearningforrenewal.presentation.AppDestination.AwaitTasks
-import com.neesan.compselearningforrenewal.presentation.AppDestination.BottomNavigation
-import com.neesan.compselearningforrenewal.presentation.AppDestination.CheckboxGroup
-import com.neesan.compselearningforrenewal.presentation.AppDestination.ContentDetail
-import com.neesan.compselearningforrenewal.presentation.AppDestination.Home
-import com.neesan.compselearningforrenewal.presentation.AppDestination.People
-import com.neesan.compselearningforrenewal.presentation.AppDestination.ReelAnimationText
-import com.neesan.compselearningforrenewal.presentation.AppDestination.ScrollWithSticky
-import com.neesan.compselearningforrenewal.presentation.AppDestination.Splash
-import com.neesan.compselearningforrenewal.presentation.AppDestination.StickyTab
+import com.neesan.compselearningforrenewal.presentation.AppDestination.*
 
 /**
  * AppDestinationの全クラスを網羅したリストから、その画面への同線になるCardのリストを表示する
@@ -39,7 +30,8 @@ fun HomeScreen(onCardClick: (String) -> Unit) {
         AwaitTasks,
         ReelAnimationText,
         ScrollWithSticky,
-        StickyTab
+        StickyTab,
+        PokemonDetail
     )
     // 2列で表示する
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {

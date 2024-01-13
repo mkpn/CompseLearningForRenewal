@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.com.google.android.libraries.mapsplatform.secrets.gradle.plugin)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -67,6 +68,9 @@ dependencies {
     implementation(libs.androidx.material)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.constraintlayout.compose)
+
+    // kotlin serialization
+    implementation(libs.kotlinx.serialization.json)
 
     // dagger hilt
     implementation(libs.androidx.hilt.navigation.compose)
