@@ -1,6 +1,7 @@
 package com.neesan.compselearningforrenewal.presentation.pokemon
 
 import androidx.lifecycle.ViewModel
+import com.neesan.compselearningforrenewal.domain.dataStore.pokemon.Sprites
 import com.neesan.compselearningforrenewal.domain.useCase.FetchPokemonByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,25 +20,19 @@ class PokemonViewModel @Inject constructor(private val fetchPokemonByIdUseCase: 
         _pokemonUiState.update {
             _pokemonUiState.value.copy(
                 isLoading = false,
-                pokemonName = pokemonDetail.name,
-                pokemonImageUrl = pokemonDetail.sprites.frontDefault,
-                pokemonWeight = pokemonDetail.weight,
-                pokemonHeight = pokemonDetail.height,
+                name = pokemonDetail.name,
+                weight = pokemonDetail.weight,
+                height = pokemonDetail.height,
+                sprites = pokemonDetail.sprites
             )
         }
     }
 }
 
 data class PokemonUiState(
-    val isLoading: Boolean = false,
-    val pokemonName: String = "",
-    val pokemonImageUrl: String = "",
-    val pokemonWeight: Int = 0,
-    val pokemonHeight: Int = 0,
-    val pokemonBaseExperience: Int = 0,
-    val pokemonAbilities: List<String> = emptyList(),
-    val pokemonTypes: List<String> = emptyList(),
-    val pokemonStats: List<String> = emptyList(),
-    val pokemonMoves: List<String> = emptyList(),
-    val pokemonError: String = ""
+    val isLoading: Boolean = true,
+    val name: String = "",
+    val weight: Int = 0,
+    val height: Int = 0,
+    val sprites: Sprites = Sprites()
 )
