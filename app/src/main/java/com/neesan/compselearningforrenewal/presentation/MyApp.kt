@@ -10,6 +10,7 @@ import com.neesan.compselearningforrenewal.presentation.AppDestination.*
 import com.neesan.compselearningforrenewal.presentation.awaitTasks.AwaitTasksScreen
 import com.neesan.compselearningforrenewal.presentation.checkboxGroup.CheckboxGroupScreen
 import com.neesan.compselearningforrenewal.presentation.bottomNavigation.BottomNavigationScreen
+import com.neesan.compselearningforrenewal.presentation.bottomSheet.BottomSheetScreen
 import com.neesan.compselearningforrenewal.presentation.content.ContentScreen
 import com.neesan.compselearningforrenewal.presentation.home.HomeScreen
 import com.neesan.compselearningforrenewal.presentation.people.PeopleScreen
@@ -82,6 +83,9 @@ fun MyApp() {
         composable(PokemonDetail.route) {
             PokemonDetailScreen()
         }
+        composable(BottomSheet.route) {
+            BottomSheetScreen()
+        }
     }
 }
 
@@ -96,17 +100,27 @@ sealed class AppDestination(
     val screenName: String,
     val screenDescription: String
 ) {
-    data object Splash : AppDestination(AppDestinations.SPLASH_ROUTE, "スプラッシュ", "スプラッシュ画面")
+    data object Splash :
+        AppDestination(AppDestinations.SPLASH_ROUTE, "スプラッシュ", "スプラッシュ画面")
+
     data object Home : AppDestination(AppDestinations.HOME_ROUTE, "ホーム", "ホーム画面")
 
     /**
      * content idのkeyを追加で持つ
      */
     data class ContentDetail(val contentIdKey: String = AppDestinations.CONTENT_ID_KEY) :
-        AppDestination(AppDestinations.CONTENT_DETAIL_ROUTE, "コンテンツ詳細", "チェックボックスのリストとかMAPとか")
+        AppDestination(
+            AppDestinations.CONTENT_DETAIL_ROUTE,
+            "コンテンツ詳細",
+            "チェックボックスのリストとかMAPとか"
+        )
 
     data object BottomNavigation :
-        AppDestination(AppDestinations.BOTTOM_NAVIGATION_ROUTE, "ボトムナビゲーション", "ボトムナビゲーション画面")
+        AppDestination(
+            AppDestinations.BOTTOM_NAVIGATION_ROUTE,
+            "ボトムナビゲーション",
+            "ボトムナビゲーション画面"
+        )
 
     data object ReelAnimationText : AppDestination(
         AppDestinations.REEL_ANIMATION_TEXT_ROUTE,
@@ -131,7 +145,18 @@ sealed class AppDestination(
         AppDestination(AppDestinations.STICKY_TAB_ROUTE, "StickyTab", "StickyTab画面")
 
     data object PokemonDetail :
-        AppDestination(AppDestinations.POKEMON_DETAIL_ROUTE, "pokemon detail", "PokeAPIからデータ取得")
+        AppDestination(
+            AppDestinations.POKEMON_DETAIL_ROUTE,
+            "pokemon detail",
+            "PokeAPIからデータ取得"
+        )
+
+    data object BottomSheet :
+        AppDestination(
+            AppDestinations.BOTTOM_SHEET_ROUTE,
+            "BottomSheet",
+            "BottomSheetのデザイン変更"
+        )
 
     companion object {
         object AppDestinations {
@@ -147,6 +172,7 @@ sealed class AppDestination(
             const val CONTENT_DETAIL_ROUTE = "content"
             const val CONTENT_ID_KEY = "contentId"
             const val POKEMON_DETAIL_ROUTE = "pokemon_detail"
+            const val BOTTOM_SHEET_ROUTE = "bottom_sheet"
         }
     }
 

@@ -31,7 +31,8 @@ fun HomeScreen(onCardClick: (String) -> Unit) {
         ReelAnimationText,
         ScrollWithSticky,
         StickyTab,
-        PokemonDetail
+        PokemonDetail,
+        BottomSheet
     )
     // 2列で表示する
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
