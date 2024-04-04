@@ -16,6 +16,7 @@ import com.neesan.compselearningforrenewal.presentation.home.HomeScreen
 import com.neesan.compselearningforrenewal.presentation.people.PeopleScreen
 import com.neesan.compselearningforrenewal.presentation.pokemon.PokemonDetailScreen
 import com.neesan.compselearningforrenewal.presentation.reelAnimationText.ReelAnimationTextScreen
+import com.neesan.compselearningforrenewal.presentation.customTopAppBar.ScrollWithStickyTabPagerScreen
 import com.neesan.compselearningforrenewal.presentation.scrollWithStickyComponent.ScrollWithStickyScreen
 import com.neesan.compselearningforrenewal.presentation.splash.SplashScreen
 import com.neesan.compselearningforrenewal.presentation.stickyTab.StickyTabScreen
@@ -85,6 +86,9 @@ fun MyApp() {
         }
         composable(BottomSheet.route) {
             BottomSheetScreen()
+        }
+        composable(CustomTopAppBar.route) {
+            ScrollWithStickyTabPagerScreen()
         }
     }
 }
@@ -158,6 +162,13 @@ sealed class AppDestination(
             "BottomSheetのデザイン変更"
         )
 
+    data object CustomTopAppBar :
+        AppDestination(
+            AppDestinations.CUSTOM_TOP_APP_BAR,
+            "CustomTopAppBar",
+            "collapse感のあるapp barの実装"
+        )
+
     companion object {
         object AppDestinations {
             const val SPLASH_ROUTE = "splash"
@@ -173,6 +184,7 @@ sealed class AppDestination(
             const val CONTENT_ID_KEY = "contentId"
             const val POKEMON_DETAIL_ROUTE = "pokemon_detail"
             const val BOTTOM_SHEET_ROUTE = "bottom_sheet"
+            const val CUSTOM_TOP_APP_BAR = "custom_top_app_bar"
         }
     }
 
