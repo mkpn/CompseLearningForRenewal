@@ -49,7 +49,7 @@ fun BottomNavigationScreen(onContentSelected: (Long) -> Unit) {
                 PeopleScreen(onContentSelected)
             }
             composable(BottomNavDestination.StickyTab.route) {
-                StickyTabScreen(onContentSelected)
+                StickyTabScreen()
             }
             composable(BottomNavDestination.ScrollWithSticky.route) {
                 ScrollWithStickyScreen()

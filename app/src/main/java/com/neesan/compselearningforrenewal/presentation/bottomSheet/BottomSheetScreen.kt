@@ -19,6 +19,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.tooling.preview.Preview
+import com.neesan.compselearningforrenewal.ui.theme.CompseLearningForRenewalTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,5 +66,13 @@ fun BottomSheetScreen() {
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun プレビュー_BottomSheetScreen() {
+    CompseLearningForRenewalTheme {
+        BottomSheetScreen()
     }
 }

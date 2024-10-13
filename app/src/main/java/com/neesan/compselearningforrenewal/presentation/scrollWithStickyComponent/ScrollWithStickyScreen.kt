@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.neesan.compselearningforrenewal.ui.theme.CompseLearningForRenewalTheme
 import kotlin.math.roundToInt
 
 @Composable
@@ -158,7 +159,9 @@ fun ScrollWithStickyScreen() {
 
 @Composable
 @Preview
-fun ScrollWithStickyScreenPreview() {
-    ScrollWithStickyScreen()
+fun プレビュー_ScrollWithStickyScreen() {
+    CompseLearningForRenewalTheme {
+        ScrollWithStickyScreen()
+    }
 }
 

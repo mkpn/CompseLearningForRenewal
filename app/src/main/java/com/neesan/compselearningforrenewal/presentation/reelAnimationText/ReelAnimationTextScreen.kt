@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.neesan.compselearningforrenewal.ui.theme.CompseLearningForRenewalTheme
 import kotlinx.coroutines.delay
 import java.text.DecimalFormat
 import kotlin.random.Random
@@ -38,5 +40,13 @@ fun ReelAnimationTextScreen() {
                 Text("停止")
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun プレビュー_ReelAnimationTextScreen() {
+    CompseLearningForRenewalTheme {
+        ReelAnimationTextScreen()
     }
 }

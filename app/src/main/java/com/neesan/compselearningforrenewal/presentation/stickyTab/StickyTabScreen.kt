@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.neesan.compselearningforrenewal.ui.theme.CompseLearningForRenewalTheme
 import kotlinx.coroutines.launch
 
 /**
@@ -38,7 +39,7 @@ import kotlinx.coroutines.launch
  */
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun StickyTabScreen(onContentSelected: (Long) -> Unit) {
+fun StickyTabScreen() {
     // Tabs for pager
     val tabData = listOf(
         "Tab 1",
@@ -188,5 +189,7 @@ fun Tab2(scrollBehavior: TopAppBarScrollBehavior) {
 @Preview
 @Composable
 private fun PreviewStickerTabScreen() {
-    StickyTabScreen(onContentSelected = {})
+    CompseLearningForRenewalTheme {
+        StickyTabScreen()
+    }
 }

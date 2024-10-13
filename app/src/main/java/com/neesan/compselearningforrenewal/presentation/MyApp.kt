@@ -73,7 +73,7 @@ fun MyApp() {
             ScrollWithStickyScreen()
         }
         composable(StickyTab.route) {
-            StickyTabScreen(onContentSelected = {})
+            StickyTabScreen()
         }
         composable(ReelAnimationText.route) {
             ReelAnimationTextScreen()

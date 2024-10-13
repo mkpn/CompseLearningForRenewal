@@ -11,48 +11,51 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.neesan.compselearningforrenewal.ui.theme.CompseLearningForRenewalTheme
 
 data class CheckboxItem(val isChecked: Boolean, val label: String)
 
 // 呼び出し側の関数の実装
 @Composable
 fun CheckboxGroupScreen() {
-    val checkboxItems = remember {
-        listOf(
-            CheckboxItem(false, "Item 1"),
-            CheckboxItem(false, "Item 2"),
-            CheckboxItem(false, "Item 3"),
-            CheckboxItem(false, "Item 4"),
-            CheckboxItem(false, "Item 5")
-        )
-    }
-
-    CheckBoxGroupContent(
-        checkboxItemList = checkboxItems
-    )
+    CheckBoxGroupContent()
 }
 
 @Composable
 private fun CheckBoxGroupContent(
-    checkboxItemList: List<CheckboxItem>
 ) {
-    val modifiedCheckboxItemList = remember { mutableStateListOf(*checkboxItemList.toTypedArray()) }
+    var checkboxItemList by remember {
+        mutableStateOf(
+            listOf(
+                CheckboxItem(false, "Item 1"),
+                CheckboxItem(false, "Item 2"),
+                CheckboxItem(false, "Item 3"),
+                CheckboxItem(false, "Item 4"),
+                CheckboxItem(false, "Item 5")
+            )
+        )
+    }
     var isListExpanded by remember { mutableStateOf(false) }
+    var parentState by remember {
+        mutableStateOf(checkboxItemList.all { it.isChecked })
+    }
 
-    val parentState = modifiedCheckboxItemList.all { it.isChecked }
     Column {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = parentState,
                 onCheckedChange = { isChecked ->
-                    modifiedCheckboxItemList.replaceAll { it.copy(isChecked = isChecked) }
+                    checkboxItemList = checkboxItemList.map {
+                        it.copy(isChecked = isChecked)
+                    }
+                    parentState = isChecked
                 }
             )
             Spacer(Modifier.size(16.dp))
@@ -65,12 +68,18 @@ private fun CheckBoxGroupContent(
         if (isListExpanded) {
             LazyColumn(modifier = Modifier.padding(start = 10.dp)) {
                 items(checkboxItemList.size) { index ->
-                    val item = modifiedCheckboxItemList[index]
+                    val item = checkboxItemList[index]
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(
                             checked = item.isChecked,
                             onCheckedChange = { isChecked ->
-                                modifiedCheckboxItemList[index] = item.copy(isChecked = isChecked)
+                                checkboxItemList = checkboxItemList.map {
+                                    if (it.label.equals(item.label)) {
+                                        it.copy(isChecked = isChecked)
+                                    } else {
+                                        it
+                                    }
+                                }
                             }
                         )
                         Spacer(Modifier.size(16.dp))
@@ -79,5 +88,13 @@ private fun CheckBoxGroupContent(
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun プレビュー_CheckBoxGroupContent() {
+    CompseLearningForRenewalTheme {
+        CheckBoxGroupContent()
     }
 }

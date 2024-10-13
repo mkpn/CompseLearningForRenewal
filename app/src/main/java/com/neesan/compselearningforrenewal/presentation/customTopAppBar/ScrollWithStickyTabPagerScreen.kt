@@ -200,7 +200,7 @@ private fun ConstraintLayoutScope.ListItemSection(
 
 @Composable
 @Preview
-fun ScrollWithStickyTabPagerScreenPreview() {
+fun プレビュー_ScrollWithStickyTabPagerScreen() {
     ScrollWithStickyTabPagerScreen()
 }
 

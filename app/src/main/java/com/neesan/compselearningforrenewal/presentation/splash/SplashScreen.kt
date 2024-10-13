@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.neesan.compselearningforrenewal.R
+import com.neesan.compselearningforrenewal.ui.theme.CompseLearningForRenewalTheme
 import kotlinx.coroutines.delay
 
 @Composable
@@ -41,6 +42,8 @@ private fun SplashContent(onInitFinish: () -> Unit) {
 
 @Preview
 @Composable
-fun SplashContentPreview() {
-    SplashContent(onInitFinish = {})
+fun プレビュー_SplashContent() {
+    CompseLearningForRenewalTheme {
+        SplashContent(onInitFinish = {})
+    }
 }

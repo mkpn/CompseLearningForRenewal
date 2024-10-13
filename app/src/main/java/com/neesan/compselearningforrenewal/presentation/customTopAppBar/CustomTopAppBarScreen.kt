@@ -64,8 +64,8 @@ fun CustomTopAppBarScreen() {
             }
         }
         when (tabSelected) {
-            Screen.A -> aScreen(this@LazyColumn)
-            Screen.B -> bScreen(this@LazyColumn)
+            Screen.A -> ContentA(this@LazyColumn)
+            Screen.B -> ContentB(this@LazyColumn)
         }
     }
     LaunchedEffect(tabSelected) {
@@ -78,17 +78,8 @@ fun CustomTopAppBarScreen() {
     }
 }
 
-enum class Screen {
-    A, B
-}
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    CustomTopAppBarScreen()
-}
-
-fun aScreen(
+private fun ContentA(
     lazyListScope: LazyListScope
 ) {
     with(lazyListScope) {
@@ -104,7 +95,7 @@ fun aScreen(
     }
 }
 
-fun bScreen(
+private fun ContentB(
     lazyListScope: LazyListScope
 ) {
     with(lazyListScope) {
@@ -118,4 +109,14 @@ fun bScreen(
             )
         }
     }
+}
+
+enum class Screen {
+    A, B
+}
+
+@Preview(showBackground = true)
+@Composable
+fun プレビュー_CustomTopAppBarScreen() {
+    CustomTopAppBarScreen()
 }

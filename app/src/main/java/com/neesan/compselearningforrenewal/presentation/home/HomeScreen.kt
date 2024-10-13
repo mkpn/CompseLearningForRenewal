@@ -50,6 +50,6 @@ fun HomeScreen(onCardClick: (String) -> Unit) {
 
 @Preview
 @Composable
-private fun HomeScreenPreview() {
+fun プレビュー_HomeScreenPreview() {
     HomeScreen {}
 }
