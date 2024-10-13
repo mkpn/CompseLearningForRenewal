@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "CompseLearningForRenewal"
 include(":app")
- 
+include(":samples:sampleOne")
+include(":samples:sampleTwo")

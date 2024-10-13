@@ -88,6 +88,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.kotlin.serialization)
 
+    // UIカタログ casa-android
+    implementation(libs.casa.ui)
+
     implementation (libs.maps.compose)
     implementation (libs.play.services.maps)
 
