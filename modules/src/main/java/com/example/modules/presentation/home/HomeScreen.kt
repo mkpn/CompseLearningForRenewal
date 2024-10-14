@@ -230,7 +230,7 @@ sealed class AppDestination(
 
 }
 
-@Preview
+@Preview(group = "ホーム")
 @Composable
 fun プレビュー_HomeScreenPreview() {
     HomeScreen {}

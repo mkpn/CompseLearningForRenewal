@@ -103,8 +103,8 @@ sealed class BottomNavDestination(val route: String, @StringRes val resourceId: 
     object ScrollWithSticky : BottomNavDestination("scrollWithSticky", R.string.sticky_tab)
 }
 
-@Preview
+@Preview(group = "ボトムナビゲーション")
 @Composable
-fun HomeScreenPreview() {
+fun プレビュー_ボトムナビゲーション() {
     BottomNavigationScreen {}
 }

@@ -37,6 +37,10 @@ android {
     }
 }
 
+ksp {
+    arg("skipPrivatePreviews", "true")
+}
+
 dependencies {
 
 
@@ -73,6 +77,11 @@ dependencies {
     // retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit.kotlin.serialization)
+
+    // showkase
+    implementation(libs.showkase)
+    implementation(libs.showkase.annotation)
+    kspDebug(libs.showkase.processor)
 
     implementation (libs.maps.compose)
     implementation (libs.play.services.maps)

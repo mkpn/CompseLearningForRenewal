@@ -115,7 +115,7 @@ enum class Screen {
     A, B
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, group = "カスタムトップアプリバー")
 @Composable
 fun プレビュー_CustomTopAppBarScreen() {
     CustomTopAppBarScreen()

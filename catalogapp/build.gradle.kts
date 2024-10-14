@@ -55,9 +55,9 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     // showkase
-    implementation("com.airbnb.android:showkase:1.0.3")
-    implementation("com.airbnb.android:showkase-annotation:1.0.3")
-    kspDebug("com.airbnb.android:showkase-processor:1.0.3")
+    implementation(libs.showkase)
+    implementation(libs.showkase.annotation)
+    kspDebug(libs.showkase.processor)
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

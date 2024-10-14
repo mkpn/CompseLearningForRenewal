@@ -69,7 +69,7 @@ fun BottomSheetScreen() {
     }
 }
 
-@Preview
+@Preview(group = "ボトムシート")
 @Composable
 fun プレビュー_BottomSheetScreen() {
     CompseLearningForRenewalTheme {

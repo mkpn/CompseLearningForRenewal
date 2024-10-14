@@ -91,7 +91,7 @@ private fun CheckBoxGroupContent(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, group = "チェックボックスグループ")
 @Composable
 fun プレビュー_CheckBoxGroupContent() {
     CompseLearningForRenewalTheme {

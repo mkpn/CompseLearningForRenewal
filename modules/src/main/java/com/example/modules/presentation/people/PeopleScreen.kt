@@ -182,7 +182,7 @@ fun PeopleScreen(onContentSelected: (Long) -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, group = "ピープルスクリーン")
 @Composable
 fun プレビュー_PeopleScreen() {
     PeopleScreen {}
