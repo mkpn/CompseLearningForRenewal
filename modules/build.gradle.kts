@@ -1,23 +1,22 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.library)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.com.google.android.libraries.mapsplatform.secrets.gradle.plugin)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.compiler)
+    kotlin("plugin.serialization")
 }
 
 android {
-    namespace = "com.example.catalogapp"
+    namespace = "com.example.modules"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.catalogapp"
         minSdk = 29
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -36,37 +35,48 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-}
-
-kotlin {
-    sourceSets.test {
-        kotlin.srcDir("build/generated/ksp/debug/kotlin")
-    }
 }
 
 dependencies {
-    implementation(project(":modules"))
 
-    // dagger hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
-    // showkase
-    implementation("com.airbnb.android:showkase:1.0.3")
-    implementation("com.airbnb.android:showkase-annotation:1.0.3")
-    kspDebug("com.airbnb.android:showkase-processor:1.0.3")
 
     implementation(libs.core.ktx)
-    implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.constraintlayout.compose)
+
+    // lifecycle
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.runtime.compose)
+
+    // image loader
+    implementation(libs.coil.compose)
+
+    // kotlin serialization
+    implementation(libs.kotlinx.serialization.json)
+
+    // dagger hilt
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+    // okhttp
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+
+    // retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.kotlin.serialization)
+
+    implementation (libs.maps.compose)
+    implementation (libs.play.services.maps)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

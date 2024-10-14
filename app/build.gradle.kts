@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.neesan.compselearningforrenewal"
-        minSdk = 24
+        minSdk = 29
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -53,6 +53,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":modules"))
 
     implementation(libs.core.ktx)
     implementation(libs.activity.compose)
