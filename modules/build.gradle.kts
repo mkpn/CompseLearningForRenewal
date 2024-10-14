@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.library)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.com.google.android.libraries.mapsplatform.secrets.gradle.plugin)
     alias(libs.plugins.hilt.android)
@@ -9,20 +9,14 @@ plugins {
 }
 
 android {
-    namespace = "com.neesan.compselearningforrenewal"
+    namespace = "com.example.modules"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.neesan.compselearningforrenewal"
         minSdk = 29
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+//        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -41,19 +35,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-        viewBinding = true
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+}
+
+ksp {
+    arg("skipPrivatePreviews", "true")
 }
 
 dependencies {
-    implementation(project(":modules"))
+
 
     implementation(libs.core.ktx)
     implementation(libs.activity.compose)
@@ -88,6 +77,11 @@ dependencies {
     // retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit.kotlin.serialization)
+
+    // showkase
+    implementation(libs.showkase)
+    implementation(libs.showkase.annotation)
+    kspDebug(libs.showkase.processor)
 
     implementation (libs.maps.compose)
     implementation (libs.play.services.maps)
