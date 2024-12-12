@@ -14,6 +14,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "CompseLearningForRenewal"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":catalogapp")
 include(":modules")
